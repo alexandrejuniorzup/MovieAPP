@@ -22,7 +22,8 @@ class HomeViewModel {
     
     private var moviesRa = [Movie]()
     private var moviesUp = [Movie]()
-    private var destaque:Int?
+    
+    var destaque:Int?
     
     
     var timer: Timer?
@@ -101,6 +102,17 @@ class HomeViewModel {
         let movie = Int.random(in: 0...moviesPo.count-1)
         delegate?.didChange(url: URL(string: service.getImageUrl(url: self.moviesPo[movie].poster_path!))!)
         self.destaque = self.moviesPo[movie].id!
+    }
+    
+    func returnID(type: CollectType, indexPath: IndexPath)->Int{
+        switch type {
+        case .popular:
+            return self.moviesPo[indexPath.row].id!
+        case .rated:
+            return self.moviesRa[indexPath.row].id!
+        case .upcoming:
+            return self.moviesUp[indexPath.row].id!
+        }
     }
     
 }

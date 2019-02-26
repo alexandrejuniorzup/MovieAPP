@@ -46,6 +46,14 @@ class HomeViewController: UIViewController {
         super .viewWillAppear(animated)
     }
     
+    
+    @IBAction func destaqueInfo(_ sender: Any) {
+        let id = self.model.destaque!
+        let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+        view.model = InfoViewModel(id: id, service: Service())
+        self.navigationController?.pushViewController(view, animated: true)
+    }
+    
 
 }
 
@@ -74,6 +82,26 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == collectPo{
+            let id = self.model.returnID(type: CollectType.popular, indexPath: indexPath)
+            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+            view.model = InfoViewModel(id: id, service: Service())
+            self.navigationController?.pushViewController(view, animated: true)
+        } else if collectionView == collectRa{
+            let id = self.model.returnID(type: CollectType.rated, indexPath: indexPath)
+            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+            view.model = InfoViewModel(id: id, service: Service())
+            self.navigationController?.pushViewController(view, animated: true)
+        } else if collectionView == collectUp{
+            let id = self.model.returnID(type: CollectType.upcoming, indexPath: indexPath)
+            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+            view.model = InfoViewModel(id: id, service: Service())
+            self.navigationController?.pushViewController(view, animated: true)
+        }
+    }
+    
 }
 
 extension HomeViewController : HomeViewModelDelegate{

@@ -28,6 +28,7 @@
 		AC41DEC822257F37003B22D0 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DEC722257F37003B22D0 /* SearchCell.swift */; };
 		AC41DECE2225A6C5003B22D0 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DECD2225A6C5003B22D0 /* InfoViewModel.swift */; };
 		AC41DED02225A6D8003B22D0 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DECF2225A6D8003B22D0 /* InfoViewController.swift */; };
+		AC41DED32225B40D003B22D0 /* ExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DED22225B40D003B22D0 /* ExtensionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		AC41DEC722257F37003B22D0 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		AC41DECD2225A6C5003B22D0 /* InfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
 		AC41DECF2225A6D8003B22D0 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		AC41DED22225B40D003B22D0 /* ExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionViewController.swift; sourceTree = "<group>"; };
 		C835D10120C9F5967A9371D4 /* Pods-Movie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Movie/Pods-Movie.debug.xcconfig"; sourceTree = "<group>"; };
 		FBBB5A210F3D18D0920552D5 /* Pods_Movie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -123,6 +125,7 @@
 		AC1867AA22205FD80064FF61 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				AC41DED12225B3F1003B22D0 /* Extension */,
 				AC41DECA2225A346003B22D0 /* Info */,
 				AC41DEC92225A335003B22D0 /* Favorite */,
 				AC41DEC022257EA5003B22D0 /* Search */,
@@ -237,6 +240,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		AC41DED12225B3F1003B22D0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DED22225B40D003B22D0 /* ExtensionViewController.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		F42C96E9F4FAC3DFD7279E28 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,17 +356,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Movie/Pods-Movie-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -371,6 +382,7 @@
 			files = (
 				AC18679D222055B60064FF61 /* Movie.xcdatamodeld in Sources */,
 				AC41DEC822257F37003B22D0 /* SearchCell.swift in Sources */,
+				AC41DED32225B40D003B22D0 /* ExtensionViewController.swift in Sources */,
 				AC186795222055B60064FF61 /* AppDelegate.swift in Sources */,
 				AC20B63E22244A5200A7C777 /* enumType.swift in Sources */,
 				AC1867C8222097530064FF61 /* UpcomingCell.swift in Sources */,

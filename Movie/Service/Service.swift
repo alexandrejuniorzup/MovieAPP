@@ -54,7 +54,7 @@ class Service: ServiceProtocol {
     }
     
     func getMovieWithID(id: Int, completion: @escaping (Response<Movie>) -> ()) {
-        let url = URL(string: baseURL + "/movie/" + String(id) + apiKey + language)
+        let url = URL(string: baseURL + "/movie/" + "\(id)?api_key=" + apiKey + language)
         parseData(url: url!) { (result:Response<Movie>) in
             completion(result)
         }
