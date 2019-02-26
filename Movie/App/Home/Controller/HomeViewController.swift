@@ -27,21 +27,27 @@ class HomeViewController: UIViewController {
         self.collectRa.dataSource = self
         self.collectUp.delegate = self
         self.collectUp.dataSource = self
-        
         model = HomeViewModel(service: Service())
+        model.delegate = self
         model.getPo() { () in
             self.collectPo.reloadData()
         }
+        model.getRa {
+            self.collectRa.reloadData()
+        }
+        model.getUp {
+            self.collectUp.reloadData()
+        }
+        self.model.timerDestaque()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
-        self.collectPo.reloadData()
     }
+    
 
 }
-
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -50,10 +56,28 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectPo.dequeueReusableCell(withReuseIdentifier: "popular", for: indexPath) as! PopularCell
-        cell.ivPoster.sd_setImage(with: URL(string: model.getImage(indexPath: indexPath)), completed: nil)
-        return cell
+        if collectionView == collectPo {
+            let cell = collectPo.dequeueReusableCell(withReuseIdentifier: "popular", for: indexPath) as! PopularCell
+            cell.drawCell(url: model.getImage(indexPath: indexPath, type: CollectType.popular))
+            return cell
+            
+        } else if collectionView == collectRa {
+            let cell = collectRa.dequeueReusableCell(withReuseIdentifier: "rated", for: indexPath) as! RatedCell
+            cell.drawCell(url: model.getImage(indexPath: indexPath, type: CollectType.rated))
+            return cell
+            
+    
+        } else {
+            let cell = collectUp.dequeueReusableCell(withReuseIdentifier: "upcoming", for: indexPath) as! UpcomingCell
+            cell.drawCell(url: model.getImage(indexPath: indexPath, type: CollectType.upcoming))
+            return cell
+            
+        }
     }
-    
-    
+}
+
+extension HomeViewController : HomeViewModelDelegate{
+    func didChange(url: URL) {
+        self.ivPoster.sd_setImage(with: url, completed: nil)
+    }
 }

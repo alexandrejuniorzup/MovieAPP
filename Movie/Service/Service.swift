@@ -11,12 +11,12 @@ import Foundation
 
 protocol ServiceProtocol {
     
-    func getMovieWithID(id:Int, completion:@escaping(Response<Page>) -> ())
+    func getMovieWithID(id:Int, completion:@escaping(Response<Movie>) -> ())
     func getMovieWithTitle(title:String, completion:@escaping(Response<Page>) -> ())
     func pagination(title:String, completion:@escaping(Response<Page>) -> ())
     func getPopularMovies(completion:@escaping(Response<Page>) -> ())
     func getRatedMovies(completion:@escaping(Response<Page>) -> ())
-    func getUpcommingMovies(completion:@escaping(Response<Page>) -> ())
+    func getUpcomingMovies(completion:@escaping(Response<Page>) -> ())
     func getImageUrl(url:String?) -> String
     
 }
@@ -53,9 +53,9 @@ class Service: ServiceProtocol {
         }
     }
     
-    func getMovieWithID(id: Int, completion: @escaping (Response<Page>) -> ()) {
+    func getMovieWithID(id: Int, completion: @escaping (Response<Movie>) -> ()) {
         let url = URL(string: baseURL + "/movie/" + String(id) + apiKey + language)
-        parseData(url: url!) { (result:Response<Page>) in
+        parseData(url: url!) { (result:Response<Movie>) in
             completion(result)
         }
     }
@@ -63,8 +63,7 @@ class Service: ServiceProtocol {
     func getMovieWithTitle(title: String, completion: @escaping (Response<Page>)->()) {
         self.pagCount = 2
         let replace = title.replacingOccurrences(of: " ", with: "+")
-        let url = URL(string: baseURL + "/search/movie&api_key=" + apiKey + "&query=" + replace + language)
-    
+        let url = URL(string: baseURL + "/search/movie?api_key=" + apiKey + "&query=" + replace + language)
         parseData(url: url!) { (result:Response<Page>) in
             completion(result)
         }
@@ -72,7 +71,7 @@ class Service: ServiceProtocol {
     
     func pagination(title: String, completion: @escaping (Response<Page>) -> ()) {
         let replace = title.replacingOccurrences(of: " ", with: "+")
-        let url = URL(string: baseURL + "/search/movie/&api_key=" + apiKey + "&query=" + replace + language + "&page=" + String(pagCount))
+        let url = URL(string: baseURL + "/search/movie?api_key=" + apiKey + "&query=" + replace + language + "&page=" + String(pagCount))
         self.pagCount+=1
         parseData(url: url!) { (result:Response<Page>) in
             completion(result)
@@ -93,7 +92,7 @@ class Service: ServiceProtocol {
         }
     }
     
-    func getUpcommingMovies(completion:@escaping(Response<Page>) -> ()) {
+    func getUpcomingMovies(completion:@escaping(Response<Page>) -> ()) {
         let url = URL(string: baseURL + "/movie/upcoming?api_key=" + apiKey + language)
         parseData(url: url!) { (result:Response<Page>) in
             completion(result)

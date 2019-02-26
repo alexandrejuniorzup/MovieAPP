@@ -23,6 +23,11 @@
 		AC1867C6222097440064FF61 /* RatedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1867C5222097440064FF61 /* RatedCell.swift */; };
 		AC1867C8222097530064FF61 /* UpcomingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1867C7222097530064FF61 /* UpcomingCell.swift */; };
 		AC20B63E22244A5200A7C777 /* enumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20B63D22244A5200A7C777 /* enumType.swift */; };
+		AC41DEC422257EC7003B22D0 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DEC322257EC7003B22D0 /* SearchViewModel.swift */; };
+		AC41DEC622257EDA003B22D0 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DEC522257EDA003B22D0 /* SearchViewController.swift */; };
+		AC41DEC822257F37003B22D0 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DEC722257F37003B22D0 /* SearchCell.swift */; };
+		AC41DECE2225A6C5003B22D0 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DECD2225A6C5003B22D0 /* InfoViewModel.swift */; };
+		AC41DED02225A6D8003B22D0 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC41DECF2225A6D8003B22D0 /* InfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +49,11 @@
 		AC1867C5222097440064FF61 /* RatedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatedCell.swift; sourceTree = "<group>"; };
 		AC1867C7222097530064FF61 /* UpcomingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingCell.swift; sourceTree = "<group>"; };
 		AC20B63D22244A5200A7C777 /* enumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enumType.swift; sourceTree = "<group>"; };
+		AC41DEC322257EC7003B22D0 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		AC41DEC522257EDA003B22D0 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		AC41DEC722257F37003B22D0 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		AC41DECD2225A6C5003B22D0 /* InfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
+		AC41DECF2225A6D8003B22D0 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		C835D10120C9F5967A9371D4 /* Pods-Movie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movie.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Movie/Pods-Movie.debug.xcconfig"; sourceTree = "<group>"; };
 		FBBB5A210F3D18D0920552D5 /* Pods_Movie.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movie.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -113,6 +123,9 @@
 		AC1867AA22205FD80064FF61 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				AC41DECA2225A346003B22D0 /* Info */,
+				AC41DEC92225A335003B22D0 /* Favorite */,
+				AC41DEC022257EA5003B22D0 /* Search */,
 				AC1867BC222089EB0064FF61 /* Home */,
 			);
 			path = App;
@@ -164,6 +177,64 @@
 				AC20B63D22244A5200A7C777 /* enumType.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		AC41DEC022257EA5003B22D0 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DEC222257EB4003B22D0 /* View */,
+				AC41DEC122257EAF003B22D0 /* Controller */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		AC41DEC122257EAF003B22D0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DEC522257EDA003B22D0 /* SearchViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AC41DEC222257EB4003B22D0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DEC322257EC7003B22D0 /* SearchViewModel.swift */,
+				AC41DEC722257F37003B22D0 /* SearchCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AC41DEC92225A335003B22D0 /* Favorite */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Favorite;
+			sourceTree = "<group>";
+		};
+		AC41DECA2225A346003B22D0 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DECC2225A6B7003B22D0 /* View */,
+				AC41DECB2225A6AE003B22D0 /* Controller */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		AC41DECB2225A6AE003B22D0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DECF2225A6D8003B22D0 /* InfoViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AC41DECC2225A6B7003B22D0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AC41DECD2225A6C5003B22D0 /* InfoViewModel.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		F42C96E9F4FAC3DFD7279E28 /* Frameworks */ = {
@@ -299,12 +370,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC18679D222055B60064FF61 /* Movie.xcdatamodeld in Sources */,
+				AC41DEC822257F37003B22D0 /* SearchCell.swift in Sources */,
 				AC186795222055B60064FF61 /* AppDelegate.swift in Sources */,
 				AC20B63E22244A5200A7C777 /* enumType.swift in Sources */,
 				AC1867C8222097530064FF61 /* UpcomingCell.swift in Sources */,
 				AC1867BB222076DE0064FF61 /* Page.swift in Sources */,
+				AC41DECE2225A6C5003B22D0 /* InfoViewModel.swift in Sources */,
+				AC41DEC422257EC7003B22D0 /* SearchViewModel.swift in Sources */,
+				AC41DED02225A6D8003B22D0 /* InfoViewController.swift in Sources */,
 				AC1867C222208A220064FF61 /* HomeViewModel.swift in Sources */,
 				AC1867B6222076860064FF61 /* enum.swift in Sources */,
+				AC41DEC622257EDA003B22D0 /* SearchViewController.swift in Sources */,
 				AC1867B4222074960064FF61 /* Service.swift in Sources */,
 				AC1867C4222096C40064FF61 /* PopularCell.swift in Sources */,
 				AC1867C022208A160064FF61 /* HomeViewController.swift in Sources */,

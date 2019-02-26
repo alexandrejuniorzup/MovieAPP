@@ -9,8 +9,8 @@
 import Foundation
 
 
-enum Collect: String {
-    case popular = "popular"
-    case rated = "rated"
-    case upcoming = "upcoming"
+enum CollectType: String {
+    case popular = "collectPo"
+    case rated = "collectRa"
+    case upcoming = "collectUp"
 }
