@@ -12,12 +12,38 @@ class InfoViewModel {
     
     private var id:Int?
     private var movie:Movie!
+    var fromDatabase:Bool!
+    var database:DataBaseProtocol
     
     let service: ServiceProtocol
-    init(id: Int, service: ServiceProtocol){
+    init(id: Int, service: ServiceProtocol, database: DataBaseProtocol, fromDatabase:Bool){
         self.service = service
         self.id = id
+        self.database = database
+        self.fromDatabase = fromDatabase
     }
+    
+    
+    func save() -> Bool{
+        do {
+            try database.saveMovie(movie: self.movie)
+            return true
+        } catch dataBase.duplicate {
+            return false
+        } catch {
+            return false
+        }
+    }
+    
+    
+    func remove(){
+        do{
+            try database.removeMovie(id: self.movie.id!)
+        }catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     
     func getMovieID(completion:@escaping()->()){
         service.getMovieWithID(id: self.id!) { (result) in

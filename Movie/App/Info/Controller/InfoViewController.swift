@@ -18,16 +18,18 @@ class InfoViewController: UIViewController {
     @IBOutlet weak var lbGenre: UILabel!
     @IBOutlet weak var lbOverview: UILabel!
     @IBOutlet weak var btnSave: UIButton!
+    @IBOutlet weak var btnRemove: UIButton!
     
     var model: InfoViewModel!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let hud = JGProgressHUD(style: .dark)
         hud.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         hud.textLabel.text = "Loading"
         hud.show(in: self.view, animated: false)
+        setBackGround()
         model.getMovieID() { () in
             self.ivPoster.sd_setImage(with: URL(string: self.model.service.getImageUrl(url: self.model.poster()))!, completed: nil)
             self.lbYear.text = "Ano: " + self.model.year()
@@ -36,10 +38,26 @@ class InfoViewController: UIViewController {
             self.lbRated.text = "Avaliação: " + self.model.rated()
             self.lbOverview.text = self.model.plot()
             self.navigationItem.title = self.model.title()
+            if self.model.fromDatabase{
+                self.btnSave.isHidden = true
+                self.btnRemove.isHidden = false
+            }
             hud.dismiss()
         }
     }
     
-
-
+    @IBAction func saveMovie(_ sender: Any) {
+        if self.model.save(){
+            btnSave.isHidden = true
+            btnRemove.isHidden = false
+        } else {
+            genericAlert(title: "Filme já está salvo nos favoritos", message: "")        }
+    }
+    
+    
+    @IBAction func deleteMove(_ sender: Any) {
+        model.remove()
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }
