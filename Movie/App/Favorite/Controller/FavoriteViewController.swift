@@ -8,12 +8,15 @@
 
 import UIKit
 
-class FavoriteViewController: UIViewController {
 
+
+class FavoriteViewController: UIViewController {
+    
     @IBOutlet weak var collect: UICollectionView!
     
-    var model:FavoriteViewModel!
+    var model: FavoriteViewModel!
     var label = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         label.text = "Você ainda não possui filmes salvos"
@@ -23,30 +26,27 @@ class FavoriteViewController: UIViewController {
         self.collect.delegate = self
         self.collect.dataSource = self
         self.model = FavoriteViewModel(database: Database())
+        model.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
-        model.getAll() { () in
-            self.collect.reloadData()
-        }
-        
+        model.getAll()
+        collect.backgroundView = model.numberOfRows() == 0 ? label : nil
     }
     
-
+    
 }
 
 extension FavoriteViewController : UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count  = model.numberOfRows()
-        collectionView.backgroundView = count == 0 ? label : nil
-        return count
+        return model.numberOfRows()        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collect.dequeueReusableCell(withReuseIdentifier: "fav", for: indexPath) as! FavoriteViewCell
-        cell.ivPoster.image = model.result[indexPath.row].poster_path as! UIImage
+        cell.posterImage.image = model.result[indexPath.row].poster_path as! UIImage
         return cell
     }
     
@@ -55,6 +55,20 @@ extension FavoriteViewController : UICollectionViewDelegate, UICollectionViewDat
         let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
         view.model = InfoViewModel(id: id!, service: Service(), database: Database(), fromDatabase: true)
         self.navigationController?.pushViewController(view, animated: true)
+    }
+    
+}
+
+
+extension FavoriteViewController: FavoriteViewModelDelegate {
+	
+    func alertReloadData(title: String, message: String) {
+        genericAlert(title: title, message: message)
+    }
+    
+    
+    func reloadData() {
+        self.collect.reloadData()
     }
     
 }

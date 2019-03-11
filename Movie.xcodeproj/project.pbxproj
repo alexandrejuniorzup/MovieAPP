@@ -112,7 +112,6 @@
 			children = (
 				AC41DED42225BC63003B22D0 /* CoreData */,
 				AC1867A9222057130064FF61 /* Others */,
-				AC1867B22220748B0064FF61 /* Service */,
 				AC1867AA22205FD80064FF61 /* App */,
 				AC186798222055B60064FF61 /* Main.storyboard */,
 			);
@@ -287,6 +286,7 @@
 		AC41DED52225BC6B003B22D0 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AC1867B22220748B0064FF61 /* Service */,
 				AC18679B222055B60064FF61 /* Movie.xcdatamodeld */,
 			);
 			path = Model;

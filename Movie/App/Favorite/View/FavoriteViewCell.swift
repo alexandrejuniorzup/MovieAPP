@@ -10,6 +10,6 @@ import UIKit
 
 class FavoriteViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var ivPoster: UIImageView!
+    @IBOutlet weak var posterImage: UIImageView!
     
 }

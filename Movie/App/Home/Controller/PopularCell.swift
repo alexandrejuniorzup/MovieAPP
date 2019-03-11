@@ -13,13 +13,13 @@ import SDWebImage
 class PopularCell: UICollectionViewCell {
     
     
-    @IBOutlet weak var ivPoster: UIImageView!
+    @IBOutlet weak var posterImage: UIImageView!
 
     func drawCell(url: String){
         if url == "" {
-            self.ivPoster.image = UIImage(named: "notFound")
+            self.posterImage.image = UIImage(named: "notFound")
         } else {
-            self.ivPoster.sd_setImage(with: URL(string: url)!, completed: nil)
+            self.posterImage.sd_setImage(with: URL(string: url)!, completed: nil)
         }
     }
 }

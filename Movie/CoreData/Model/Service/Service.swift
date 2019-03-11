@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Reachability
 
 protocol ServiceProtocol {
     
@@ -31,23 +31,27 @@ class Service: ServiceProtocol {
     
     private func getData(url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()){
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            completion(data,response,error)
-        }
+                completion(data,response,error)
+            }
         task.resume()
     }
     
     private func parseData<T:Codable>(url:URL, completion:@escaping(Response<T>) -> ()) {
         getData(url: url) { (data, response, error) in
-            do{
-                let decoder = JSONDecoder()
-                let movie = try decoder.decode(T.self, from: data!)
-                
-                DispatchQueue.main.async {
-                    completion(.success(movie))
-                }
-            } catch let parsingError{
-                DispatchQueue.main.async {
-                    completion(.error(parsingError))
+            if let error = error {
+                completion(.error(error))
+            } else {
+                do{
+                    let decoder = JSONDecoder()
+                    let movie = try decoder.decode(T.self, from: data!)
+                    
+                    DispatchQueue.main.async {
+                        completion(.success(movie))
+                    }
+                } catch let parsingError{
+                    DispatchQueue.main.async {
+                        completion(.error(parsingError))
+                    }
                 }
             }
         }
@@ -55,7 +59,7 @@ class Service: ServiceProtocol {
     
     func getMovieWithID(id: Int, completion: @escaping (Response<Movie>) -> ()) {
         let url = URL(string: baseURL + "/movie/" + "\(id)?api_key=" + apiKey + language)
-        parseData(url: url!) { (result:Response<Movie>) in
+        parseData(url: url!) { (result) in
             completion(result)
         }
     }
@@ -64,7 +68,7 @@ class Service: ServiceProtocol {
         self.pagCount = 2
         let replace = title.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: baseURL + "/search/movie?api_key=" + apiKey + "&query=" + replace + language)
-        parseData(url: url!) { (result:Response<Page>) in
+        parseData(url: url!) { (result) in
             completion(result)
         }
     }
@@ -73,28 +77,28 @@ class Service: ServiceProtocol {
         let replace = title.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: baseURL + "/search/movie?api_key=" + apiKey + "&query=" + replace + language + "&page=" + String(pagCount))
         self.pagCount+=1
-        parseData(url: url!) { (result:Response<Page>) in
+        parseData(url: url!) { (result) in
             completion(result)
         }
     }
     
     func getPopularMovies(completion:@escaping(Response<Page>) -> ()) {
         let url = URL(string: baseURL + "/movie/popular?api_key=" + apiKey + language)
-        parseData(url: url!) { (result:Response<Page>) in
+        parseData(url: url!) { (result) in
             completion(result)
         }
     }
     
     func getRatedMovies(completion:@escaping(Response<Page>) -> ()) {
         let url = URL(string: baseURL + "/movie/top_rated?api_key=" + apiKey + language)
-        parseData(url: url!) { (result:Response<Page>) in
+        parseData(url: url!) { (result) in
             completion(result)
         }
     }
     
     func getUpcomingMovies(completion:@escaping(Response<Page>) -> ()) {
         let url = URL(string: baseURL + "/movie/upcoming?api_key=" + apiKey + language)
-        parseData(url: url!) { (result:Response<Page>) in
+        parseData(url: url!) { (result) in
             completion(result)
         }
     }

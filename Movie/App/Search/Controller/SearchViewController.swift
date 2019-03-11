@@ -14,27 +14,36 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     private var model: SearchViewModel!
     var label = UILabel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        label.text = "Utilize a barra de pesquisa para procurar filmes"
+        label.text = "Use barra de procura para encontrar filmes"
         label.textAlignment = .center
         label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        setBackGround()
         collect.dataSource = self
         collect.delegate = self
         searchBar.delegate = self
         model = SearchViewModel(service: Service())
+        self.model.delegate = self
+        presentText()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    func presentText(){
+        collect.reloadData()
+        collect.backgroundView = model.numberOfRows() == 0 ? label : nil
+    }
 }
 
 
 extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = model.numberOfMovies() ?? 0
-        collect.backgroundView = count == 0 ? label : nil
-        return count
+        return model.numberOfRows()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -55,12 +64,12 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if verifyConnection(){
-            model.getMoviesWithTitleService(title: searchBar.text!) { () in
-                self.collect.reloadData()
-            }
+        if searchBar.text == "" {
+            model.cleanMovies()
+            label.text = "Use barra de procura para encontrar filmes"
+            presentText()
         } else {
-            alertNoConnection()
+            model.getMoviesWithTitleService(title: searchBar.text!)
         }
     }
     
@@ -68,10 +77,24 @@ extension SearchViewController: UISearchBarDelegate {
         let offSetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         if offSetY > contentHeight - scrollView.frame.height {
-            model.pagination(title: self.searchBar.text!) { () in
-                self.collect.reloadData()
-            }
-            
+            model.pagination(title: self.searchBar.text!)
         }
     }
+}
+
+
+extension SearchViewController: SearchViewModelDelegate {
+    func responseSuccess() {
+        if model.movies.isEmpty {
+            model.cleanMovies()
+            self.label.text = "Não foi possivel encontrar filme"
+        } else {
+            presentText()
+        }
+    }
+    
+    func responseError() {
+        label.text = "Falha ao procurar filmes"
+        presentText()
+    }    
 }

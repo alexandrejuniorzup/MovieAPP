@@ -43,7 +43,11 @@ class Database: DataBaseProtocol {
         }
     }
     
-    
+//    func getMovieCoreToMovieWithId(id:Int) -> Movie {
+//        if let mov = getMovie(id: <#T##Int#>)
+//    }
+
+
     func getAllMovies() -> [MovieCore]? {
         var mov:[MovieCore]? = nil
         do {

@@ -8,27 +8,36 @@
 
 import Foundation
 
+
+protocol SearchViewModelDelegate: class {
+    func responseSuccess()
+    func responseError()
+}
+
 class SearchViewModel {
     
-    private var movies = [Movie]()
+    var movies = [Movie]()
+    
+    weak var delegate: SearchViewModelDelegate?
     let service: ServiceProtocol
     init(service: ServiceProtocol){
         self.service = service
     }
     
-    func getMoviesWithTitleService(title: String, completion: @escaping()->()) {
+    func getMoviesWithTitleService(title: String) {
         service.getMovieWithTitle(title: title) { (result) in
             switch result{
             case .success(Success: let page):
                 self.movies = page.results
-                completion()
+                self.delegate?.responseSuccess()
             case .error:
+                self.delegate?.responseError()
                 break
             }
         }
     }
     
-    func numberOfMovies() -> Int {
+    func numberOfRows() -> Int {
         return self.movies.count
     }
     
@@ -36,12 +45,12 @@ class SearchViewModel {
         return service.getImageUrl(url: self.movies[indexPath.row].poster_path)
     }
     
-    func pagination(title: String ,completion:@escaping()->()){
+    func pagination(title: String){
         service.pagination(title: title) { (result) in
             switch result{
             case .success(Success: let page):
+                self.delegate?.responseSuccess()
                 self.movies.append(contentsOf: page.results)
-                completion()
             case .error:
                 break
             }
@@ -52,4 +61,7 @@ class SearchViewModel {
         return self.movies[indexPath.row].id!
     }
     
+    func cleanMovies(){
+        self.movies = []
+    }
 }

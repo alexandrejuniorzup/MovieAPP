@@ -8,27 +8,29 @@
 
 import Foundation
 
+protocol FavoriteViewModelDelegate: class {
+    func reloadData()
+    func alertReloadData(title:String,message:String)
+}
+
 
 class FavoriteViewModel {
     
-    var result = [MovieCore]() {
-        didSet{
-
-        }
-    }
+    var result = [MovieCore]()    
+    weak var delegate: FavoriteViewModelDelegate?
     var database:DataBaseProtocol
-    
     init(database: DataBaseProtocol){
         self.database = database
     }
     
     
-    func getAll(completion:@escaping()->()){
+    func getAll(){
         do {
             result = try database.getAllMovies()!
-            completion()
+            delegate?.reloadData()
         } catch {
             print(error.localizedDescription)
+            delegate?.alertReloadData(title: "Nao foi possivel carregar filmes", message:"")
         }
     }
     
@@ -36,8 +38,8 @@ class FavoriteViewModel {
         return result.count
     }
     
-//    func image(indexPath:IndexPath) -> Data {
-//        return result[indexPath.row].poster_path as! UIImage
-//    }
-
+    //    func image(indexPath:IndexPath) -> Data {
+    //        return result[indexPath.row].poster_path as! UIImage
+    //    }
+    
 }

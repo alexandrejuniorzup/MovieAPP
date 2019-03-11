@@ -12,3 +12,4 @@ enum Response<Result:Codable> {
     case success(Result)
     case error(Error)
 }
+

@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     private var model: HomeViewModel!
     
     
-    @IBOutlet weak var ivPoster: UIImageView!
+    @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var collectPo: UICollectionView!
     @IBOutlet weak var collectRa: UICollectionView!
     @IBOutlet weak var collectUp: UICollectionView!
@@ -30,13 +30,13 @@ class HomeViewController: UIViewController {
         self.collectUp.dataSource = self
         model = HomeViewModel(service: Service())
         model.delegate = self
-        model.getPo() { () in
+        model.getPopular() { () in
             self.collectPo.reloadData()
         }
-        model.getRa {
+        model.getRated {
             self.collectRa.reloadData()
         }
-        model.getUp {
+        model.getUpcoming {
             self.collectUp.reloadData()
         }
         self.model.timerDestaque()
@@ -49,14 +49,10 @@ class HomeViewController: UIViewController {
     
     
     @IBAction func destaqueInfo(_ sender: Any) {
-        if !verifyConnection(){
-            alertNoConnection()
-        } else {
-            let id = self.model.destaque!
-            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-            view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-            self.navigationController?.pushViewController(view, animated: true)
-        }
+        let id = self.model.destaque!
+        let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+        view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
+        self.navigationController?.pushViewController(view, animated: true)
     }
     
     
@@ -89,32 +85,34 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if verifyConnection(){
-            if collectionView == collectPo{
-                let id = self.model.returnID(type: CollectType.popular, indexPath: indexPath)
-                let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-                view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-                self.navigationController?.pushViewController(view, animated: true)
-            } else if collectionView == collectRa{
-                let id = self.model.returnID(type: CollectType.rated, indexPath: indexPath)
-                let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-                view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-                self.navigationController?.pushViewController(view, animated: true)
-            } else if collectionView == collectUp{
-                let id = self.model.returnID(type: CollectType.upcoming, indexPath: indexPath)
-                let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-                view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-                self.navigationController?.pushViewController(view, animated: true)
-            }
-        }else {
-            alertNoConnection()
+        if collectionView == collectPo{
+            let id = self.model.returnID(type: CollectType.popular, indexPath: indexPath)
+            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+            view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
+            self.navigationController?.pushViewController(view, animated: true)
+        } else if collectionView == collectRa{
+            let id = self.model.returnID(type: CollectType.rated, indexPath: indexPath)
+            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+            view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
+            self.navigationController?.pushViewController(view, animated: true)
+        } else if collectionView == collectUp{
+            let id = self.model.returnID(type: CollectType.upcoming, indexPath: indexPath)
+            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+            view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
+            self.navigationController?.pushViewController(view, animated: true)
         }
     }
 }
 
 
 extension HomeViewController : HomeViewModelDelegate{
+    
     func didChange(url: URL) {
-        self.ivPoster.sd_setImage(with: url, completed: nil)
+        self.posterImage.sd_setImage(with: url, completed: nil)
     }
+    
+    func presentErrorConnection() {
+        alertNoConnection()
+    }
+    
 }

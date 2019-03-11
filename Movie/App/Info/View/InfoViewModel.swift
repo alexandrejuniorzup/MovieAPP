@@ -8,13 +8,17 @@
 
 import Foundation
 
+protocol InfoViewModelDelegate: class {
+    func presentErrorConnection()
+}
+
 class InfoViewModel {
     
     private var id:Int?
     private var movie:Movie!
     var fromDatabase:Bool!
     var database:DataBaseProtocol
-    
+    weak var delegate: InfoViewModelDelegate?
     let service: ServiceProtocol
     init(id: Int, service: ServiceProtocol, database: DataBaseProtocol, fromDatabase:Bool){
         self.service = service
@@ -51,12 +55,15 @@ class InfoViewModel {
             case .success(Succes: let movie):
                 self.movie = movie
                 completion()
-            case .error:
-                break
+            case .error(Error: let error):
+                if error.localizedDescription == "The Internet connection appears to be offline."{
+                    self.delegate?.presentErrorConnection()
+                }
             }
             
         }
     }
+    
     
     func year() -> String {
         if let year = self.movie.release_date {
@@ -95,7 +102,7 @@ class InfoViewModel {
     
     func plot() -> String {
         if let plot = self.movie.overview {
-            return String(plot)
+            return plot
         } else {
             return ""
         }

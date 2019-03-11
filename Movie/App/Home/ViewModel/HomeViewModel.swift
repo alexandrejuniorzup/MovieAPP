@@ -10,18 +10,19 @@ import Foundation
 
 protocol HomeViewModelDelegate: class {
     func didChange(url: URL)
+    func presentErrorConnection()
 }
 
 class HomeViewModel {
     
-    private var moviesPo = [Movie]() {
+    private var moviesPopular = [Movie]() {
         didSet{
             mudarDestaque()
         }
     }
     
-    private var moviesRa = [Movie]()
-    private var moviesUp = [Movie]()
+    private var moviesRated = [Movie]()
+    private var moviesUpcoming = [Movie]()
     
     var destaque:Int?
     
@@ -42,24 +43,27 @@ class HomeViewModel {
         mudarDestaque()
     }
     
-    func getPo(completion:@escaping () -> ()) {
+    func getPopular(completion:@escaping () -> ()) {
         service.getPopularMovies { (result) in
             switch result{
             case .success(Success: let page):
-                self.moviesPo = page.results
+                self.moviesPopular = page.results
                 completion()
-            case .error:
-                break
+            case .error(Error: let error):
+                if error.localizedDescription == "The Internet connection appears to be offline."{
+                    self.delegate?.presentErrorConnection()
+                }
+                
             }
         }
         
     }
     
-    func getRa(completion:@escaping () -> ()) {
+    func getRated(completion:@escaping () -> ()) {
         service.getRatedMovies { (result) in
             switch result{
             case .success(Success: let page):
-                self.moviesRa = page.results
+                self.moviesRated = page.results
                 completion()
             case .error:
                 break
@@ -68,11 +72,11 @@ class HomeViewModel {
         
     }
     
-    func getUp(completion:@escaping () -> ()) {
+    func getUpcoming(completion:@escaping () -> ()) {
         service.getUpcomingMovies { (result) in
             switch result{
             case .success(Success: let page):
-                self.moviesUp = page.results
+                self.moviesUpcoming = page.results
                 completion()
             case .error:
                 break
@@ -82,36 +86,53 @@ class HomeViewModel {
     }
     
     func numberOfMoviesInSection() -> Int {
-        return self.moviesPo.count
+        return self.moviesPopular.count
     }
     
     func getImage(indexPath: IndexPath,type: CollectType)-> String{
         switch type {
         case .popular:
-            return service.getImageUrl(url: self.moviesPo[indexPath.row].poster_path!)
+            if let url = self.moviesPopular[indexPath.row].poster_path {
+                return service.getImageUrl(url: url)
+            } else {return "" }
         case .rated:
-            return service.getImageUrl(url: self.moviesRa[indexPath.row].poster_path!)
+            if let url = self.moviesRated[indexPath.row].poster_path {
+                return service.getImageUrl(url: url)
+            } else {return "" }
         case .upcoming:
-            return service.getImageUrl(url: self.moviesUp[indexPath.row].poster_path!)
+            if let url = self.moviesUpcoming[indexPath.row].poster_path {
+                return service.getImageUrl(url: url)
+            } else {return "" }
         }
     }
     
     func mudarDestaque(){
-        guard !moviesPo.isEmpty else {return}
+        guard !moviesPopular.isEmpty else {return}
         
-        let movie = Int.random(in: 0...moviesPo.count-1)
-        delegate?.didChange(url: URL(string: service.getImageUrl(url: self.moviesPo[movie].poster_path!))!)
-        self.destaque = self.moviesPo[movie].id!
+        let movie = Int.random(in: 0...moviesPopular.count-1)
+        if let url = self.moviesPopular[movie].poster_path {
+            delegate?.didChange(url: URL(string: service.getImageUrl(url: url))!)
+        }
+        delegate?.didChange(url: URL(string: service.getImageUrl(url: self.moviesPopular[movie].poster_path!))!)
+        if let aux = self.moviesPopular[movie].id {
+            self.destaque = aux
+        } else { mudarDestaque()}
     }
     
     func returnID(type: CollectType, indexPath: IndexPath)->Int{
         switch type {
         case .popular:
-            return self.moviesPo[indexPath.row].id!
+            if let id = self.moviesPopular[indexPath.row].id {
+                return id
+            } else { return 0}
         case .rated:
-            return self.moviesRa[indexPath.row].id!
+            if let id = self.moviesRated[indexPath.row].id {
+                return id
+            } else { return 0}
         case .upcoming:
-            return self.moviesUp[indexPath.row].id!
+            if let id = self.moviesRated[indexPath.row].id {
+                return id
+            } else { return 0}
         }
     }
     
