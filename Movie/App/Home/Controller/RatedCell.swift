@@ -10,7 +10,13 @@ import UIKit
 
 class RatedCell: UICollectionViewCell {
     
-    @IBOutlet weak var ivPoster: UIImageView!
+    @IBOutlet weak var posterImage: UIImageView!
     
-    
+    func drawCell(url: String){
+        if url == "" {
+            self.posterImage.image = UIImage(named: "notFound")
+        } else {
+            self.posterImage.sd_setImage(with: URL(string: url)!, completed: nil)
+        }
+    }
 }

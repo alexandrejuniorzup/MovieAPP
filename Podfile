@@ -5,6 +5,6 @@ target 'Movie' do
 
     pod 'SDWebImage', '~> 4.0'
     pod 'ReachabilitySwift'
-    pod 'SwiftyJSON', '~> 4.0'
-
+    pod 'JGProgressHUD'
+    
 end

@@ -1,26 +1,26 @@
 PODS:
+  - JGProgressHUD (2.0.3)
   - ReachabilitySwift (4.3.0)
   - SDWebImage (4.4.5):
     - SDWebImage/Core (= 4.4.5)
   - SDWebImage/Core (4.4.5)
-  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
+  - JGProgressHUD
   - ReachabilitySwift
   - SDWebImage (~> 4.0)
-  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - JGProgressHUD
     - ReachabilitySwift
     - SDWebImage
-    - SwiftyJSON
 
 SPEC CHECKSUMS:
+  JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SDWebImage: ecc03494e973b93b80213649d32175f8d2d17d4d
-  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 536793d54a5ced9bd8232d04c0a3c559a17f3a8c
+PODFILE CHECKSUM: caa15e3a4e04d1839e9826e84bf6c7371391b160
 
 COCOAPODS: 1.5.3
