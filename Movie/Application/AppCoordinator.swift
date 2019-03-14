@@ -18,7 +18,8 @@ class AppCoordinator: Coordinator {
     private lazy var tabBarController: UITabBarController = {
         let tabBarController = UITabBarController()
         tabBarController.tabBar.isTranslucent = false
-        tabBarController.tabBar.barTintColor = #colorLiteral(red: 1, green: 0.2060600442, blue: 0.1049270352, alpha: 1)
+        tabBarController.tabBar.barTintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        tabBarController.tabBar.tintColor = #colorLiteral(red: 1, green: 0.2060600442, blue: 0.1049270352, alpha: 1)
         return tabBarController
     } ()
     

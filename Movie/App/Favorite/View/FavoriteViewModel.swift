@@ -18,11 +18,15 @@ class FavoriteViewModel {
     
     var result = [MovieCore]()    
     weak var delegate: FavoriteViewModelDelegate?
+    weak var delegateCoord: FavoriteCoordinatorDelegate?
     var database:DataBaseProtocol
     init(database: DataBaseProtocol){
         self.database = database
     }
     
+    func selectMovie(id: Int){
+        delegateCoord?.navigateToInfo(id: id)
+    }
     
     func getAll(){
         do {

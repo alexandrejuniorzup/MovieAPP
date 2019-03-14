@@ -17,12 +17,18 @@ protocol SearchViewModelDelegate: class {
 class SearchViewModel {
     
     var movies = [Movie]()
-    
+    var delegateCoord: SearchCoordinatorDelegate?
     weak var delegate: SearchViewModelDelegate?
     let service: ServiceProtocol
     init(service: ServiceProtocol){
         self.service = service
     }
+    
+    
+    func selectMovie(id:Int){
+        delegateCoord?.navigateToInfo(id: id)
+    }
+    
     
     func getMoviesWithTitleService(title: String) {
         service.getMovieWithTitle(title: title) { (result) in

@@ -15,6 +15,12 @@ protocol HomeViewModelDelegate: class {
 
 class HomeViewModel {
     
+    var delegateCoord: HomeCoordinatorDelegate?
+    
+    func selectMovie(id:Int){
+        delegateCoord?.navigateToInfo(id: id)
+    }
+    
     private var moviesPopular = [Movie]() {
         didSet{
             mudarDestaque()

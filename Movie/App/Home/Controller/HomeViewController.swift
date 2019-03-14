@@ -13,8 +13,9 @@ class HomeViewController: UIViewController {
     
     private var model: HomeViewModel!
     
-    static func instantiate() -> HomeViewController {
+    static func instantiate(viewModel: HomeViewModel) -> HomeViewController {
         let homeViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        homeViewController.model = viewModel
         return homeViewController
     }
     
@@ -25,6 +26,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "Top Rated"
         setBackGround()
         self.collectPo.delegate = self
         self.collectPo.dataSource = self
@@ -32,7 +34,6 @@ class HomeViewController: UIViewController {
         self.collectRa.dataSource = self
         self.collectUp.delegate = self
         self.collectUp.dataSource = self
-        model = HomeViewModel(service: Service())
         model.delegate = self
         model.getPopular() { () in
             self.collectPo.reloadData()
@@ -54,9 +55,7 @@ class HomeViewController: UIViewController {
     
     @IBAction func destaqueInfo(_ sender: Any) {
         let id = self.model.destaque!
-        let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-        view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-        self.navigationController?.pushViewController(view, animated: true)
+        model.selectMovie(id: id)
     }
     
     
@@ -91,19 +90,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == collectPo{
             let id = self.model.returnID(type: CollectType.popular, indexPath: indexPath)
-            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-            view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-            self.navigationController?.pushViewController(view, animated: true)
+            model.selectMovie(id: id)
         } else if collectionView == collectRa{
             let id = self.model.returnID(type: CollectType.rated, indexPath: indexPath)
-            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-            view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-            self.navigationController?.pushViewController(view, animated: true)
+            model.selectMovie(id: id)
         } else if collectionView == collectUp{
             let id = self.model.returnID(type: CollectType.upcoming, indexPath: indexPath)
-            let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-            view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-            self.navigationController?.pushViewController(view, animated: true)
+            model.selectMovie(id: id)
         }
     }
 }

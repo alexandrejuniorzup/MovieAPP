@@ -26,6 +26,7 @@
 		AC1CEC922226D24B00A7A3B3 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1CEC912226D24B00A7A3B3 /* FavoriteViewController.swift */; };
 		AC1CEC942226D2B600A7A3B3 /* FavoriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1CEC932226D2B600A7A3B3 /* FavoriteViewCell.swift */; };
 		AC20B63E22244A5200A7C777 /* enumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC20B63D22244A5200A7C777 /* enumType.swift */; };
+		AC2CF450223AB8CA004BC0D7 /* InfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2CF44F223AB8CA004BC0D7 /* InfoCoordinator.swift */; };
 		AC313AD12239793A00718795 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC313AD02239793A00718795 /* Coordinator.swift */; };
 		AC313AD4223979D300718795 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC313AD3223979D300718795 /* AppCoordinator.swift */; };
 		AC313AD6223979E700718795 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC313AD5223979E700718795 /* HomeCoordinator.swift */; };
@@ -62,6 +63,7 @@
 		AC1CEC912226D24B00A7A3B3 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
 		AC1CEC932226D2B600A7A3B3 /* FavoriteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewCell.swift; sourceTree = "<group>"; };
 		AC20B63D22244A5200A7C777 /* enumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enumType.swift; sourceTree = "<group>"; };
+		AC2CF44F223AB8CA004BC0D7 /* InfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCoordinator.swift; sourceTree = "<group>"; };
 		AC313AD02239793A00718795 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		AC313AD3223979D300718795 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		AC313AD5223979E700718795 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			children = (
 				AC41DECC2225A6B7003B22D0 /* View */,
 				AC41DECB2225A6AE003B22D0 /* Controller */,
+				AC2CF44F223AB8CA004BC0D7 /* InfoCoordinator.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				AC1867C222208A220064FF61 /* HomeViewModel.swift in Sources */,
 				AC1867B6222076860064FF61 /* enum.swift in Sources */,
 				AC41DEC622257EDA003B22D0 /* SearchViewController.swift in Sources */,
+				AC2CF450223AB8CA004BC0D7 /* InfoCoordinator.swift in Sources */,
 				AC1867B4222074960064FF61 /* Service.swift in Sources */,
 				AC1867C4222096C40064FF61 /* PopularCell.swift in Sources */,
 				AC1867C022208A160064FF61 /* HomeViewController.swift in Sources */,

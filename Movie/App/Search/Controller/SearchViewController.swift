@@ -16,8 +16,9 @@ class SearchViewController: UIViewController {
     var label = UILabel()
 
     
-    static func instantiate() -> SearchViewController {
+    static func instantiate(viewModel: SearchViewModel) -> SearchViewController {
         let searchViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        searchViewController.model = viewModel
         
         return searchViewController
     }
@@ -31,7 +32,6 @@ class SearchViewController: UIViewController {
         collect.dataSource = self
         collect.delegate = self
         searchBar.delegate = self
-        model = SearchViewModel(service: Service())
         self.model.delegate = self
         presentText()
     }
@@ -62,9 +62,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let id = self.model.returnID(indexPath: indexPath)
-        let view = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
-        view.model = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
-        self.navigationController?.pushViewController(view, animated: true)
+        model.selectMovie(id:id)
     }
     
 }
