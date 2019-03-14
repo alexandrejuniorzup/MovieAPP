@@ -34,7 +34,6 @@ class HomeViewModel {
         self.service = service
     }
     
-    
     func timerDestaque(){
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true, block: { (timer) in
@@ -137,4 +136,3 @@ class HomeViewModel {
     }
     
 }
-

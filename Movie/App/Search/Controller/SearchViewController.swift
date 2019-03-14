@@ -15,6 +15,14 @@ class SearchViewController: UIViewController {
     private var model: SearchViewModel!
     var label = UILabel()
 
+    
+    static func instantiate() -> SearchViewController {
+        let searchViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        
+        return searchViewController
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         label.text = "Use barra de procura para encontrar filmes"

@@ -14,8 +14,15 @@ class FavoriteViewController: UIViewController {
     
     @IBOutlet weak var collect: UICollectionView!
     
+    
     var model: FavoriteViewModel!
     var label = UILabel()
+    
+    static func instantiate() -> FavoriteViewController {
+        let favoriteViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
+        
+        return favoriteViewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

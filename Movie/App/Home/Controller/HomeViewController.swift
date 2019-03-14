@@ -13,6 +13,10 @@ class HomeViewController: UIViewController {
     
     private var model: HomeViewModel!
     
+    static func instantiate() -> HomeViewController {
+        let homeViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+        return homeViewController
+    }
     
     @IBOutlet weak var posterImage: UIImageView!
     @IBOutlet weak var collectPo: UICollectionView!

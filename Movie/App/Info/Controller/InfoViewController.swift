@@ -22,6 +22,12 @@ class InfoViewController: UIViewController {
     
     var model: InfoViewModel!
     
+    static func instantiate(viewModel: InfoViewModel) -> InfoViewController {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InfoViewController") as! InfoViewController
+        viewController.model = viewModel
+        
+        return viewController
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
