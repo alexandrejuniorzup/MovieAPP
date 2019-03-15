@@ -43,7 +43,7 @@ class SearchCoordinator: Coordinator {
 extension SearchCoordinator: SearchCoordinatorDelegate {
     
     func navigateToInfo(id: Int) {
-        let infoCoord = InfoCoordinator(id: id, navigationController: navigationController)
+        let infoCoord = InfoCoordinator(id: id, fromDatabase: false, navigationController: navigationController)
         infoCoord.start()
     }
 }

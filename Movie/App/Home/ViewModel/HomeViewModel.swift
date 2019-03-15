@@ -11,6 +11,7 @@ import Foundation
 protocol HomeViewModelDelegate: class {
     func didChange(url: URL)
     func presentErrorConnection()
+    func reloadData(type: CollectType)
 }
 
 class HomeViewModel {
@@ -48,12 +49,12 @@ class HomeViewModel {
         mudarDestaque()
     }
     
-    func getPopular(completion:@escaping () -> ()) {
+    func getPopular() {
         service.getPopularMovies { (result) in
             switch result{
             case .success(Success: let page):
                 self.moviesPopular = page.results
-                completion()
+                self.delegate?.reloadData(type: .popular)
             case .error(Error: let error):
                 if error.localizedDescription == "The Internet connection appears to be offline."{
                     self.delegate?.presentErrorConnection()
@@ -64,12 +65,12 @@ class HomeViewModel {
         
     }
     
-    func getRated(completion:@escaping () -> ()) {
+    func getRated() {
         service.getRatedMovies { (result) in
             switch result{
             case .success(Success: let page):
                 self.moviesRated = page.results
-                completion()
+                self.delegate?.reloadData(type: .rated)
             case .error:
                 break
             }
@@ -77,12 +78,12 @@ class HomeViewModel {
         
     }
     
-    func getUpcoming(completion:@escaping () -> ()) {
+    func getUpcoming() {
         service.getUpcomingMovies { (result) in
             switch result{
             case .success(Success: let page):
                 self.moviesUpcoming = page.results
-                completion()
+                self.delegate?.reloadData(type: .upcoming)
             case .error:
                 break
             }

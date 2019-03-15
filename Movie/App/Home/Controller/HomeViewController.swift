@@ -35,15 +35,9 @@ class HomeViewController: UIViewController {
         self.collectUp.delegate = self
         self.collectUp.dataSource = self
         model.delegate = self
-        model.getPopular() { () in
-            self.collectPo.reloadData()
-        }
-        model.getRated {
-            self.collectRa.reloadData()
-        }
-        model.getUpcoming {
-            self.collectUp.reloadData()
-        }
+        model.getPopular()
+        model.getRated()
+        model.getUpcoming()
         self.model.timerDestaque()
         
     }
@@ -72,13 +66,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let cell = collectPo.dequeueReusableCell(withReuseIdentifier: "popular", for: indexPath) as! PopularCell
             cell.drawCell(url: model.getImage(indexPath: indexPath, type: CollectType.popular))
             return cell
-            
         } else if collectionView == collectRa {
             let cell = collectRa.dequeueReusableCell(withReuseIdentifier: "rated", for: indexPath) as! RatedCell
             cell.drawCell(url: model.getImage(indexPath: indexPath, type: CollectType.rated))
             return cell
-            
-            
         } else {
             let cell = collectUp.dequeueReusableCell(withReuseIdentifier: "upcoming", for: indexPath) as! UpcomingCell
             cell.drawCell(url: model.getImage(indexPath: indexPath, type: CollectType.upcoming))
@@ -110,6 +101,17 @@ extension HomeViewController : HomeViewModelDelegate{
     
     func presentErrorConnection() {
         alertNoConnection()
+    }
+    
+    func reloadData(type: CollectType){
+        switch type {
+        case .popular:
+            self.collectPo.reloadData()
+        case .rated:
+            self.collectRa.reloadData()
+        default:
+            self.collectUp.reloadData()
+        }
     }
     
 }

@@ -7,19 +7,16 @@ protocol DataBaseProtocol {
     func getAllMovies() throws -> [MovieCore]?
     func saveMovie(movie:Movie) throws
     func removeMovie(id:Int) throws
+    func duplicate(id: Int) -> Bool
 }
 
-enum NotFound:Error{
+
+enum DataBaseError: Error {
+    case duplicado
+    case failedSaveMovie
+    case errorSaveImage(String)
     case notFound(String)
-}
-
-enum ErrorImage:Error{
-    case errorSave(String)
-    
-}
-
-enum dataBase:Error{
-    case duplicate
+    case errorLoadMovies(String)
 }
 
 class Database: DataBaseProtocol {
@@ -39,29 +36,23 @@ class Database: DataBaseProtocol {
         if let movie = fetchMovies.first{
             return movie
         } else {
-            throw NotFound.notFound("Filme não encontrado")
+            throw DataBaseError.notFound("Filme não encontrado")
         }
     }
     
-//    func getMovieCoreToMovieWithId(id:Int) -> Movie {
-//        if let mov = getMovie(id: <#T##Int#>)
-//    }
-
-
-    func getAllMovies() -> [MovieCore]? {
+    func getAllMovies() throws -> [MovieCore]? {
         var mov:[MovieCore]? = nil
         do {
             mov = try context.fetch(MovieCore.fetchRequest())
             return mov
         } catch {
-            print(error.localizedDescription)
-            return mov
+            throw DataBaseError.errorLoadMovies("Não foi possivel carregar os filmes")
         }
     }
     
     func saveMovie(movie:Movie) throws {
         if !duplicate(id: movie.id!){
-            throw dataBase.duplicate
+            throw DataBaseError.duplicado
         } else {
             let entity = NSEntityDescription.entity(forEntityName: "MovieCore", in: context)
             let newMovie = NSManagedObject(entity: entity!, insertInto: context)
@@ -76,7 +67,7 @@ class Database: DataBaseProtocol {
             do {
                 try context.save()
             } catch {
-                print("Failed Save")
+                throw DataBaseError.failedSaveMovie
             }
         }
     }
@@ -92,7 +83,7 @@ class Database: DataBaseProtocol {
         if let data = try? Data(contentsOf: URL(string: str)!){
             return UIImage(data: data)!
         } else {
-            throw ErrorImage.errorSave("Não foi possivel encontrar a imagem")
+            throw DataBaseError.errorSaveImage("Não foi possivel encontrar a imagem")
         }
     }
     

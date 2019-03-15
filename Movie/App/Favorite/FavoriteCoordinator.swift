@@ -42,7 +42,7 @@ class FavoriteCoordinator: Coordinator {
 extension FavoriteCoordinator: FavoriteCoordinatorDelegate {
     
     func navigateToInfo(id: Int) {
-        let infoCoord = InfoCoordinator(id: id, navigationController: navigationController)
+        let infoCoord = InfoCoordinator(id: id, fromDatabase: true , navigationController: navigationController)
         infoCoord.start()
     }
 }

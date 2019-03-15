@@ -33,7 +33,6 @@ class FavoriteViewModel {
             result = try database.getAllMovies()!
             delegate?.reloadData()
         } catch {
-            print(error.localizedDescription)
             delegate?.alertReloadData(title: "Nao foi possivel carregar filmes", message:"")
         }
     }
@@ -41,9 +40,5 @@ class FavoriteViewModel {
     func numberOfRows() -> Int{
         return result.count
     }
-    
-    //    func image(indexPath:IndexPath) -> Data {
-    //        return result[indexPath.row].poster_path as! UIImage
-    //    }
     
 }

@@ -63,7 +63,7 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let id = self.model.returnID(indexPath: indexPath)
         model.selectMovie(id:id)
-    }
+        }
     
 }
 
@@ -102,5 +102,9 @@ extension SearchViewController: SearchViewModelDelegate {
     func responseError() {
         label.text = "Falha ao procurar filmes"
         presentText()
-    }    
+    }
+    
+    func alert(title: String){
+        genericAlert(title: title, message: "")
+    }
 }

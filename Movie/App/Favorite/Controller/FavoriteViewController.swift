@@ -44,6 +44,8 @@ class FavoriteViewController: UIViewController {
     }
     
     
+    
+    
 }
 
 extension FavoriteViewController : UICollectionViewDelegate, UICollectionViewDataSource {
@@ -54,20 +56,20 @@ extension FavoriteViewController : UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collect.dequeueReusableCell(withReuseIdentifier: "fav", for: indexPath) as! FavoriteViewCell
-        cell.posterImage.image = model.result[indexPath.row].poster_path as! UIImage
+        cell.posterImage.image = model.result[indexPath.row].poster_path as? UIImage
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let id = Int(model.result[indexPath.row].id!)
-        model.selectMovie(id: id!)
+        if let id = Int(model.result[indexPath.row].id!){
+            model.selectMovie(id: id)
+        }
     }
     
 }
 
-
 extension FavoriteViewController: FavoriteViewModelDelegate {
-	
+    
     func alertReloadData(title: String, message: String) {
         genericAlert(title: title, message: message)
     }

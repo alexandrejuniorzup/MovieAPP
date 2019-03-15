@@ -37,6 +37,7 @@ class InfoViewController: UIViewController {
         hud.textLabel.text = "Loading"
         hud.show(in: self.view, animated: false)
         setBackGround()
+        model.checkDatabase()
         model.getMovieID() { () in
             self.posterImage.sd_setImage(with: URL(string: self.model.service.getImageUrl(url: self.model.poster()))!, completed: nil)
             self.lbYear.text = "Ano: " + self.model.year()
@@ -54,26 +55,35 @@ class InfoViewController: UIViewController {
     }
     
     @IBAction func saveMovie(_ sender: Any) {
-        if self.model.save(){
-            btnSave.isHidden = true
-            btnRemove.isHidden = false
-        } else {
-            genericAlert(title: "Filme já está salvo nos favoritos", message: "")        }
+        self.model.save()
     }
     
     
     @IBAction func deleteMove(_ sender: Any) {
         model.remove()
-        self.navigationController?.popViewController(animated: true)
     }
     
 }
 
 extension InfoViewController: InfoViewModelDelegate {
     
-    func presentErrorConnection() {
-        alertNoConnection()
+    func changeButton(){
+        btnSave.isHidden = true
+        btnRemove.isHidden = false
     }
     
+    func presentErrorConnection() {
+        alertNoConnection()
+        self.navigationController?.popViewController(animated: false)
+    }
+    
+    func alreadyInDatabase() {
+        self.btnSave.isHidden = true
+        self.btnRemove.isHidden = false
+    }
+    
+    func genericError() {
+        genericAlert(title: "Erro indesperado aconteceu", message: "Falha ao tentar salvar o filme nos favoritos")
+    }
     
 }

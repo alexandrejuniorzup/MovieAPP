@@ -12,6 +12,7 @@ import Foundation
 protocol SearchViewModelDelegate: class {
     func responseSuccess()
     func responseError()
+    func alert(title: String)
 }
 
 class SearchViewModel {
@@ -64,7 +65,11 @@ class SearchViewModel {
     }
     
     func returnID(indexPath:IndexPath) -> Int{
-        return self.movies[indexPath.row].id!
+        if let id =  self.movies[indexPath.row].id {
+            return id
+        } else {
+            return 0
+        }
     }
     
     func cleanMovies(){

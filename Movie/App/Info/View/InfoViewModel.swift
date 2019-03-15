@@ -10,6 +10,9 @@ import Foundation
 
 protocol InfoViewModelDelegate: class {
     func presentErrorConnection()
+    func alreadyInDatabase()
+    func genericError()
+    func changeButton()
 }
 
 class InfoViewModel {
@@ -28,18 +31,22 @@ class InfoViewModel {
     }
     
     
-    func save() -> Bool{
+    func save(){
         do {
             try database.saveMovie(movie: self.movie)
-            return true
-        } catch dataBase.duplicate {
-            return false
+            delegate?.changeButton()
+        } catch DataBaseError.duplicado {
+            delegate?.alreadyInDatabase()
         } catch {
-            return false
+            delegate?.genericError()
         }
     }
     
-    
+    func checkDatabase(){
+        if !database.duplicate(id: id!){
+            delegate?.alreadyInDatabase()
+        }
+    }
     func remove(){
         do{
             try database.removeMovie(id: self.movie.id!)

@@ -28,9 +28,9 @@ class InfoCoordinator:Coordinator {
         navigationController.pushViewController(infoModule.viewController, animated: true)
     }
     
-    init(id:Int, navigationController: UINavigationController){
+    init(id:Int,fromDatabase: Bool, navigationController: UINavigationController){
         self.navigationController = navigationController
-        self.infoModule = buildInfoModule(id: id)
+        self.infoModule = buildInfoModule(id: id, fromDatabase: fromDatabase)
     }
 
     
@@ -40,8 +40,8 @@ class InfoCoordinator:Coordinator {
         let viewModel: InfoViewModel
     }
     
-    private func buildInfoModule(id: Int) -> InfoModule {
-        let viewModel = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: false)
+    private func buildInfoModule(id: Int, fromDatabase: Bool) -> InfoModule {
+        let viewModel = InfoViewModel(id: id, service: Service(), database: Database(), fromDatabase: fromDatabase)
         let viewController = InfoViewController.instantiate(viewModel: viewModel)        
         return InfoModule(viewController: viewController, viewModel: viewModel)
     }
