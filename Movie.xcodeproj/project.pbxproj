@@ -122,6 +122,7 @@
 		AC186793222055B60064FF61 /* Movie */ = {
 			isa = PBXGroup;
 			children = (
+				AC41DED52225BC6B003B22D0 /* Model */,
 				AC313AD2223979A600718795 /* Application */,
 				AC313ACF2239792900718795 /* Coordinator */,
 				AC41DED42225BC63003B22D0 /* CoreData */,
@@ -240,7 +241,7 @@
 		AC41DEC022257EA5003B22D0 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				AC41DEC222257EB4003B22D0 /* View */,
+				AC41DEC222257EB4003B22D0 /* ViewModel */,
 				AC41DEC122257EAF003B22D0 /* Controller */,
 				AC313AD722397C4E00718795 /* SearchCoordinator.swift */,
 			);
@@ -250,18 +251,18 @@
 		AC41DEC122257EAF003B22D0 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				AC41DEC722257F37003B22D0 /* SearchCell.swift */,
 				AC41DEC522257EDA003B22D0 /* SearchViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		AC41DEC222257EB4003B22D0 /* View */ = {
+		AC41DEC222257EB4003B22D0 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				AC41DEC322257EC7003B22D0 /* SearchViewModel.swift */,
-				AC41DEC722257F37003B22D0 /* SearchCell.swift */,
 			);
-			path = View;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		AC41DEC92225A335003B22D0 /* Favorite */ = {
@@ -312,7 +313,6 @@
 			isa = PBXGroup;
 			children = (
 				AC41DED62225BC72003B22D0 /* Database */,
-				AC41DED52225BC6B003B22D0 /* Model */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
